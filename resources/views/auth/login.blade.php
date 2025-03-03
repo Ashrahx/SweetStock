@@ -2,46 +2,56 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+      <div class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+        <!-- left side -->
+        <div class="flex flex-col justify-center p-8 md:p-14">
+            
+          <div class="mb-3 text-4xl">
+            <x-application-logo class="w-[20rem]"/>
+          </div>
+          <span class="font-light text-gray-400">
+            {{ __('Welcome back!') }} {{ __('Please enter your details') }}.
+          </span>
+          <form method="POST" action="{{ route('login') }}">
+           @csrf
+          <div class="pt-4">
+            <span class="mb-2 text-md">{{ __('Email') }}</span>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              required
+              autofocus
+              placeholder="{{ __('Enter your email')}}"
+              class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
+          </div>
+          <div class="py-4">
+            <span class="mb-2 text-md">{{ __('Password') }}</span>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              required
+              placeholder="{{ __('Enter your password') }}"
+              class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+            />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
+          </div>
+          <button type="submit"
+            class="w-full bg-[#69210B] text-[#fff] p-2 rounded-lg my-6 border border-[#69210B] border-solid border-1 hover:bg-transparent hover:text-[#69210B] duration-200">
+            {{ __('Log in') }}
+          </button>
+        
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
+        <!-- right side -->
+        <div class="relative">
+          <img src="{{ asset('assets/images/bg-login.webp') }}" class="w-[400px] h-full hidden rounded-r-2xl md:block object-cover"/>
         </div>
+      </div>
+    </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
 </x-guest-layout>
